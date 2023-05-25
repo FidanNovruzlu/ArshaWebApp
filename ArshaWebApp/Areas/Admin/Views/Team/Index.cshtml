@@ -1,0 +1,73 @@
+﻿
+@{
+    int count = (Model.CurrentPage -1) *5;
+}
+@model PaginationVM<Team>
+
+<div class="container-fluid">
+    <div class="row bg-title">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Teams</h4> </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <a asp-action="Create" class="btn btn-success pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">
+                Create
+            </a>
+            <ol class="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Dashboard">Dashboard</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Teams</h3>
+                <p class="text-muted">Add class <code>.table</code></p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Profile</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Settings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(Team item in Model.Teams)
+                            {
+                                <tr>
+                                    <td>@(++count)</td>
+                                    <td>
+                                        <img style="width:100px" src="~/assets/img/team/@item.ProfileImageName">
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Surname</td>
+                                    <td>
+                                        <a asp-action="Read" asp-route-id="@item.Id"><button class="btn btn-info ">Details</button></a> 
+                                        <a asp-action="Update" asp-route-id="@item.Id" asp-controller="Team">
+                                            <button class="btn btn-success">Edit</button>
+                                        </a>
+                                        <form method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                             <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <nav aria-label="...">
+                 <ul class="pagination pagination-lg">
+                    @for(int i = 1; i <= Model.PageCount; i++)
+                    {
+                    <li class="page-item @(i== Model.CurrentPage?  "disabled" : "")">
+                      <a class="page-link" asp-route-page="@i" tabindex="-1">@i</a>
+                    </li>
+                    }
+                 </ul>
+            </nav>
+        </div>
+    </div>
+</div>

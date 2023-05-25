@@ -1,0 +1,23 @@
+﻿@model LoginVM
+<div class=" container col-lg-6 mt-lg-5">
+    <div class=" col-lg-6 mt-5">
+ 
+    <form method="post" >
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  <!-- Email input -->
+  <div class="form-outline mb-4 mt-5">
+    <label class="form-label" asp-for="Email">Email address</label>
+    <input asp-for="Email" class="form-control" />
+    <span class="text-danger" asp-validation-for="Email"></span>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4 mt-5">
+    <label class="form-label" asp-for="Password"></label>
+    <input asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" class="text-danger"></span>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+</form>
+</div>
+</div>

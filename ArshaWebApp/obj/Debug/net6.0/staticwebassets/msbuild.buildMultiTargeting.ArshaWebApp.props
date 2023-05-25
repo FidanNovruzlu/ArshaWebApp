@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ArshaWebApp.props" />
+</Project>
