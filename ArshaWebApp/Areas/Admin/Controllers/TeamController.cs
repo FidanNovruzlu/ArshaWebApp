@@ -71,6 +71,7 @@ public class TeamController : Controller
         {
             await newTeam.ProfileImage.CopyToAsync(fileStream);
         }
+
         team.ProfileImageName= newFileName;
         await _arshaDbContext.Teams.AddAsync(team);
         await _arshaDbContext.SaveChangesAsync();

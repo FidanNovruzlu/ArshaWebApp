@@ -3,6 +3,8 @@ using ArshaWebApp.ViewModels.AccountVM;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Printing;
+using System.Net;
+using System.Net.Mail;
 
 namespace ArshaWebApp.Controllers;
 public class AccountController:Controller
@@ -54,9 +56,40 @@ public class AccountController:Controller
             }
         }
 
+        string token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+        string link = Url.Action("ConfrimUser", "Account", new {email=appUser.Email,token=token},HttpContext.Request.Scheme);
+
+        MailMessage message= new MailMessage("fidan.novruzlu0309@gmail.com",appUser.Email)
+        {
+            Subject="Confrim User",
+            Body = $"<a href=\"{link}\">Click to confirm mail</a>",
+            IsBodyHtml =true,
+        };
+        SmtpClient smtpClient = new SmtpClient()
+        {
+            Host = "smtp.gmail.com",
+            Port = 587,
+            EnableSsl = true,
+            Credentials = new NetworkCredential("fidan.novruzlu0309@gmail.com", "qxodsjodqajkbibv")
+        };    
+
+        smtpClient.Send(message);
         return RedirectToAction(nameof(Login));
     }
+    public async Task<IActionResult> ConfrimUser(string email,string token)
+    {
+        AppUser user= await _userManager.FindByEmailAsync(email);
+        if (user == null) return NotFound();
 
+        IdentityResult result= await _userManager.ConfirmEmailAsync(user,token);
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError("", "Confrim mail incorrect.");
+            return View();
+        }
+         await _signInManager.SignInAsync(user,true);
+        return RedirectToAction("Index","Home");
+    }
     public async Task<IActionResult> Login()
     {
         return View();

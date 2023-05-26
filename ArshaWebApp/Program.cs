@@ -18,6 +18,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
     opt.Password.RequiredLength = 8;
 
     opt.User.RequireUniqueEmail = true;
+    opt.SignIn.RequireConfirmedEmail = true;
+
 })  .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ArshaDbContext>();
 
