@@ -1,4 +1,5 @@
 ﻿using ArshaWebApp.DataContext;
+using ArshaWebApp.Extensions;
 using ArshaWebApp.Models;
 using ArshaWebApp.ViewModels;
 using ArshaWebApp.ViewModels.TeamVM;
@@ -18,11 +19,12 @@ public class TeamController : Controller
         _arshaDbContext = arshaDbContext;
         _webHostEnvironment = webHostEnvironment;
     }
+
     public async Task<IActionResult> Index(int page = 1,int take=5)
     {
         List<Team> teams = await _arshaDbContext.Teams.Skip((page-1)*take).Take(take).ToListAsync();
         int teamAllCount = _arshaDbContext.Teams.Count();
-        PaginationVM<Team> paginationVM = new PaginationVM<Team>()
+        PaginationVM<Team> paginationVM = new()
         {
             Teams= teams,
             CurrentPage=page,
@@ -34,7 +36,7 @@ public class TeamController : Controller
 
     public async Task<IActionResult> Create()
     {
-        CreateTeamVM newTeam=new CreateTeamVM()
+        CreateTeamVM newTeam = new()
         {
             Jobs = await _arshaDbContext.Jobs.ToListAsync(),
         };
@@ -50,29 +52,24 @@ public class TeamController : Controller
             return View(newTeam);
         }
 
-        Team team = new Team()
-        {
-            Name = newTeam.Name,
-            Surname= newTeam.Surname,
-            Bio=newTeam.Bio,
-            JobId=newTeam.JobId
-        };
-
-        if(!newTeam.ProfileImage.ContentType.Contains("image/") && newTeam.ProfileImage.Length / 1024 > 2048)
+        if(!newTeam.ProfileImage.CheckType("image/") && !newTeam.ProfileImage.CheckSize(2048))
         {
             ModelState.AddModelError("", "Incorrect image type and size!");
             newTeam.Jobs=  await _arshaDbContext.Jobs.ToListAsync();
             return View(newTeam);
         }
+ 
+        string newFileName = await newTeam.ProfileImage.UploadAsync(_webHostEnvironment.WebRootPath, "assets", "img", "team");
 
-        string newFileName = Guid.NewGuid().ToString() + newTeam.ProfileImage.FileName ;
-        string path = Path.Combine(_webHostEnvironment.WebRootPath,"assets","img","team",newFileName);
-        using(FileStream fileStream=new FileStream(path, FileMode.CreateNew))
+        Team team = new()
         {
-            await newTeam.ProfileImage.CopyToAsync(fileStream);
-        }
+            Name = newTeam.Name,
+            Surname = newTeam.Surname,
+            Bio = newTeam.Bio,
+            JobId = newTeam.JobId,
+            ProfileImageName = newFileName
+        };
 
-        team.ProfileImageName= newFileName;
         await _arshaDbContext.Teams.AddAsync(team);
         await _arshaDbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -144,7 +141,7 @@ public class TeamController : Controller
 
     public async Task<IActionResult> Read(int id)
     {
-       Team? team = await _arshaDbContext.Teams.Include(t=>t.Job).FirstOrDefaultAsync(t=>t.Id==id);
+        Team? team = await _arshaDbContext.Teams.Include(t=>t.Job).FirstOrDefaultAsync(t=>t.Id==id);
         if (team == null) return NotFound();
         return View(team);
 ;    }

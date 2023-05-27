@@ -17,7 +17,7 @@ namespace ArshaWebApp.Controllers
         public async Task< IActionResult> Index()
         {
             List<Team> teams = await _context.Teams.OrderBy(t=>t.Name).Take(4).Include(t=>t.Job).ToListAsync();
-            HomeVM homeVM= new HomeVM()
+            HomeVM homeVM= new ()
             {
                 Teams= teams
             };

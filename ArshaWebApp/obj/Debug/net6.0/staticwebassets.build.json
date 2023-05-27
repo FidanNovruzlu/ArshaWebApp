@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VFiUtfZ9wfNE9v9tsgFN3aP73zunkAjoHv1iruoCGt8=",
+  "Hash": "/0igXDioJ9/L1t5R9H+jZYMGEy+yJkjdINrZ2B1zFJc=",
   "Source": "ArshaWebApp",
   "BasePath": "_content/ArshaWebApp",
   "Mode": "Default",
@@ -5013,6 +5013,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\team\\53df6745-0b6c-4ad5-b1c0-bcd18f30b7c23afe10863d096a6bcc73ccfed69d4f39.jpg"
+    },
+    {
+      "Identity": "D:\\desktop\\programs\\C#\\ASP.NET Core MVC\\ArshaWebApp\\ArshaWebApp\\wwwroot\\assets\\img\\team\\637bcd69-5a87-4fd8-9bb0-e144ea6b64e6127900e0d88610335dd831f683116e2e.jpg",
+      "SourceId": "ArshaWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\desktop\\programs\\C#\\ASP.NET Core MVC\\ArshaWebApp\\ArshaWebApp\\wwwroot\\",
+      "BasePath": "_content/ArshaWebApp",
+      "RelativePath": "assets/img/team/637bcd69-5a87-4fd8-9bb0-e144ea6b64e6127900e0d88610335dd831f683116e2e.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\team\\637bcd69-5a87-4fd8-9bb0-e144ea6b64e6127900e0d88610335dd831f683116e2e.jpg"
     },
     {
       "Identity": "D:\\desktop\\programs\\C#\\ASP.NET Core MVC\\ArshaWebApp\\ArshaWebApp\\wwwroot\\assets\\img\\team\\6b3e15c7-8fba-416e-beba-9c2cb7cfa5170ee0fa133f8cff513ac34c1f5110df58.jpg",

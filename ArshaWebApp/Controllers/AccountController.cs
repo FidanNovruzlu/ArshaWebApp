@@ -28,7 +28,7 @@ public class AccountController:Controller
     {
         if(!ModelState.IsValid) return View();
 
-        AppUser appUser=new AppUser()
+        AppUser appUser = new AppUser()
         {
             Name= registerVM.Name,
             Surname= registerVM.Surname,

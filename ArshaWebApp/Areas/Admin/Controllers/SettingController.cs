@@ -18,14 +18,14 @@ public class SettingController : Controller
     }
     public IActionResult Index()
     {
-        List<Setting> settings=_arshaDbContext.Settings.ToList();
+        List<Setting> settings = _arshaDbContext.Settings.ToList();
         return View(settings);
     }
     public IActionResult Update(int id)
     {
         Setting? setting= _arshaDbContext.Settings.FirstOrDefault(x => x.Id == id);
         if (setting == null) return NotFound();
-        UpdateSettingVM updateSettingVM= new UpdateSettingVM()
+        UpdateSettingVM updateSettingVM= new()
         {
             Value= setting.Value,
         };
@@ -34,10 +34,7 @@ public class SettingController : Controller
     [HttpPost]
     public IActionResult Update(int id, UpdateSettingVM updateSettingVM)
     {
-        if (!ModelState.IsValid)
-        {
-            return View(updateSettingVM);
-        }
+        if (!ModelState.IsValid)  return View(updateSettingVM);
 
         Setting? setting = _arshaDbContext.Settings.FirstOrDefault(x => x.Id == id);
         if (setting == null) return NotFound();
